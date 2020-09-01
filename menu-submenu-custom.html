@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+.navbar {
+  /*overflow: hidden;*/
+  background-color: #333; 
+}
+
+.navbar a {
+  /*float: left;*/
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.subnav {
+  float: left;
+  overflow: hidden;
+}
+
+.subnav .subnavbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .subnav:hover .subnavbtn {
+  background-color: red;
+}
+
+.subnav-content {
+  display: none;
+  position: absolute;
+  left: 0;
+  background-color: red;
+  width: 100%;
+  z-index: 1;
+}
+
+.subnav-content a {
+  float: left;
+  color: white;
+  text-decoration: none;
+}
+
+.subnav-content a:hover {
+  background-color: #eee;
+  color: black;
+}
+
+.subnav:hover .subnav-content {
+  display: block;
+}
+
+
+
+.subnav-content ul {
+  list-style-type: none;
+}
+
+
+/*----*/
+
+.subnav-content .my-a {
+  float: none;
+}
+
+.my-li {
+  margin-bottom: 10px;
+}
+
+.float-left {
+  float: left;
+}
+
+.subnav-content::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.navbar::after {
+  content: "";
+  clear: both;
+  display: table; 
+}
+
+.margin-top-custom {
+  margin-top: 14px;
+}
+
+.backgr-burger {
+  display: none;
+  padding: 14px 16px;
+  background-color: #333;
+}
+
+.burger {
+  width: 30px;
+  height: 3px;
+  background-color: white;
+  margin: 6px 0;
+}
+
+.side-panel-top {
+  display: none;
+}
+
+
+@media only screen and (max-width: 1000px) {
+
+    .backgr-burger {
+        display: block;        
+    }
+
+    /*.burger-icon::after {
+      content: "";
+      clear: both;
+      display: table;
+    }*/
+
+    .navbar {
+      display: none;
+    }
+
+    .navbar-mobile {
+      position: absolute;
+      display: block;
+      left: 0;
+      /*background-color: red;*/
+      width: 100%;
+      z-index: 1;
+      border-top: 3px solid white;
+    }
+
+    .float-resp {
+      width: 100%;
+    }
+
+    .nomargin-bottom {
+      margin-bottom: 0px;
+    }
+
+    .nomargin-top {
+      margin-top: 0px;
+    }
+
+    .navbar > div:first-child {
+      padding: 14px 0px;
+    }
+
+    .navbar > div:last-child {
+      padding: 14px 0px 28px;  
+    }
+
+    .side-panel  {    
+      width: 0;
+      position: fixed;
+      z-index: 20;
+      top: 0px;
+      right: 0px;
+      background-color: red;
+      overflow-x: hidden;
+      transition: 0.3s;
+    }
+
+    .side-panel ul {
+      padding-left: 20px;
+    }
+
+    .side-panel-width {
+      width: 320px;
+    }
+
+    .subnav-content {
+      left: auto;
+    }
+
+    .side-panel-top {
+      display: block;
+      padding-top: 10px;
+      cursor: pointer;
+    }
+
+    .back {
+      background-color: red;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    .fa-caret-down:before {
+      content: "\f0da";
+    }
+
+    .disable-navbar {
+      position: absolute;
+      top: 63px;
+      left: 0;
+      opacity: 0.3;
+      width: 100%;
+      height: 500px;
+      z-index: 10;     
+    }
+
+    .subnav-content-nohover {
+      position: absolute;
+    
+      background-color: red;      
+      z-index: 1;      
+    }
+    .subnav-content-nohover::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+    .subnav-content-nohover .my-a {
+      float: none;
+      color: white;
+      text-decoration: none;
+    }
+    .subnav-content-nohover a:hover {
+      background-color: #eee;
+      color: black;
+    }
+    .subnav-content-nohover ul {
+      list-style-type: none;
+    }
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="backgr-burger" onclick="clickedMenuBurger(this)">
+  <div class="burger"></div>
+  <div class="burger"></div>
+  <div class="burger"></div>
+</div>
+<div id="disable-navbar">
+</div>
+<div class="navbar">
+  <div class="margin-top-custom nomargin-top float-left float-resp">
+    <a href="#home">Home</a>
+  </div>
+
+  <div class="subnav float-resp">
+    <button class="subnavbtn" onclick="openSidePanel(this)">About <i class="fa fa-caret-down"></i></button>
+    <div class="subnav-content side-panel">
+      <div class="side-panel-top" onclick="menuBack(this)">
+        <button class="back"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+        <span class="selected-category"></span>
+      </div>
+      <div class="float-left float-resp">
+        <ul class="nomargin-bottom">
+          <li class="my-li"><a class="my-a" href="#company">Company</a></li>
+          <li class="my-li"><a class="my-a" href="#team">Team</a></li>
+          <li class="my-li"><a class="my-a" href="#careers">Careers</a></li>      
+        </ul>
+      </div>
+      <div class="float-left float-resp">
+        <ul class="nomargin-top">
+          <li class="my-li"><a class="my-a" href="#company">Company2</a></li>
+          <li class="my-li"><a class="my-a" href="#team">Team2</a></li>
+          <li class="my-li"><a class="my-a" href="#careers">Careers2</a></li>        
+        </ul>
+      </div>
+    </div>
+  </div> 
+  <div class="subnav float-resp">
+    <button class="subnavbtn" onclick="openSidePanel(this)">Services <i class="fa fa-caret-down"></i></button>
+    <div class="subnav-content side-panel">
+      <div class="side-panel-top" onclick="menuBack(this)">
+        <button class="back"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+        <span class="selected-category"></span>
+      </div>
+      <div class="float-left float-resp">
+        <ul class="nomargin-bottom">
+          <li class="my-li"><a class="my-a" href="#company">Bring</a></li>
+          <li class="my-li"><a class="my-a" href="#team">Deliver</a></li>
+          <li class="my-li"><a class="my-a" href="#careers">Package</a></li>
+          <li class="my-li"><a class="my-a" href="#careers">Express</a></li>    
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="subnav float-resp">
+    <button class="subnavbtn" onclick="openSidePanel(this)">Partners <i class="fa fa-caret-down"></i></button>
+    <div class="subnav-content side-panel">
+      <div class="side-panel-top" onclick="menuBack(this)">
+        <button class="back"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+        <span class="selected-category"></span>
+      </div>
+      <div class="float-left float-resp">
+        <ul class="nomargin-bottom">
+          <li class="my-li"><a class="my-a" href="#company">Link 1</a></li>
+          <li class="my-li"><a class="my-a" href="#team">Link 2</a></li>
+          <li class="my-li"><a class="my-a" href="#careers">Link 3</a></li>
+          <li class="my-li"><a class="my-a" href="#careers">Link 4</a></li>    
+        </ul>
+      </div>
+    </div>
+  </div>  
+  <div class="margin-top-custom nomargin-top float-left float-resp">
+    <a href="#contact">Contact</a>
+  </div>
+</div>
+
+
+<div style="padding:0 16px">
+  <h3>Subnav/dropdown menu inside a Navigation Bar</h3>
+  <p>Hover over the "about", "services" or "partners" link to see the sub navigation menu.</p>
+</div>
+
+
+
+
+
+
+<script>
+
+window.addEventListener("resize", myFunctionOnResize);
+//chiamo la funzione al caricamento della pagina perchè se viene visualizzata direttamente da mobile senza che avvenga l'evento resize non vengono agiunte le classi css agli elementi del menu
+//-----
+//I call the function on page loading because if it is displayed directly on mobile without resize event no css classes are added in menu items
+myFunctionOnResize();
+
+
+function clickedMenuBurger(x) {
+  
+  //x.classList.toggle("change");       //only for test
+  var divMenu = document.getElementsByClassName("navbar")[0];
+  //console.log("divMenu: " + divMenu);
+  divMenu.classList.toggle("navbar-mobile");
+}
+
+function openSidePanel(clickedElem) {
+
+  closeOpenSidePanels();
+  //console.log(clickedElem.nextSibling.nextSibling);
+  //console.log(clickedElem.innerHTML);
+  var spanSelectedCateg = document.getElementsByClassName("selected-category");
+  var pattern = /^.+?(?=<)/;    //match all characters except < and it stops before the match
+  var result = clickedElem.innerHTML.match(pattern);
+  var i;
+  for(i=0; i<spanSelectedCateg.length; i++) {
+    spanSelectedCateg[i].innerHTML = result;
+  }
+
+  var divSidePanel = clickedElem.nextSibling.nextSibling;   //it's the side panel relative to the clicked menu entry
+  divSidePanel.classList.toggle("side-panel-width");
+}
+
+//thinked to obscure the left side of menu after click but not used by now
+/*function disableOtherMenuItems(divToNotDisable) {
+
+  var divSubnavContentArr = document.getElementsByClassName("subnav-content");
+  var divSubnavContent;
+
+  for (divSubnavContent of divSubnavContentArr) {
+      if (divSubnavContent != divToNotDisable) {
+        divSubnavContent.classList.toggle("subnav-content-obscure");
+      }
+  }
+}*/
+
+function closeOpenSidePanels() {
+
+  var divSidePanelArr = document.getElementsByClassName("side-panel");
+  var i, j;
+  var divSidePanelClassesArr;
+  //console.log(divSidePanelArr[0].className);
+  //console.log(divSidePanelArr[1].className);
+  for (i=0; i<divSidePanelArr.length; i++) {
+    divSidePanelClassesArr = divSidePanelArr[i].className.split(" ");
+    //console.log(divSidePanelClassesArr);
+    for(j=0; j<divSidePanelClassesArr.length; j++) {
+      if (divSidePanelClassesArr[j] == "side-panel-width") {
+        divSidePanelArr[i].classList.toggle("side-panel-width");
+      }
+    }
+  }
+}
+
+function disableNavbar() {
+
+  var divDisableNavbar = document.getElementById("disable-navbar");
+  divDisableNavbar.classList.toggle("disable-navbar");
+}
+
+function myFunctionOnResize() {
+
+  var mobileBreakpoint = 1000;
+  var w = document.documentElement.clientWidth;
+  //console.log(w);
+
+  if (w <= mobileBreakpoint) {
+    var divSubnavContentArr = document.getElementsByClassName("subnav-content");
+    var divSubnavContentArrCopy = [];
+    var i;
+    //copio l'array altrimenti se viene modificata la classe di un suo elemento dentro il ciclo si modifica la sua lunghezza e non vengono processati tutti gli elementi
+    //-----
+    //I copy the array otherwise if one of its elements is modified inside loop his length is modified and not all elements are processed
+    for(i=0; i<divSubnavContentArr.length; i++) {
+      divSubnavContentArrCopy[i] = divSubnavContentArr[i];
+    }
+    //anche così
+    //also
+    //var divSubnavContentArrCopy = Array.prototype.slice.call(divSubnavContentArr);
+    var divSubnavContent;
+    
+      for (divSubnavContent of divSubnavContentArrCopy) {
+            divSubnavContent.classList.toggle("subnav-content");
+            divSubnavContent.classList.toggle("subnav-content-nohover");         
+      }
+  } else {
+      var divSubnavContentNoHoverArr = document.getElementsByClassName("subnav-content-nohover");
+      var divSubnavContentNoHoverArrCopy = [];
+      var i;
+      //same as above
+      for(i=0; i<divSubnavContentNoHoverArr.length; i++) {
+        divSubnavContentNoHoverArrCopy[i] = divSubnavContentNoHoverArr[i];
+      }
+      var divSubnavContentNoHover;
+        for (divSubnavContentNoHover of divSubnavContentNoHoverArrCopy) {
+            divSubnavContentNoHover.classList.toggle("subnav-content-nohover");
+            divSubnavContentNoHover.classList.toggle("subnav-content");
+        }
+  }
+
+}
+
+
+function menuBack(clickedDiv) {
+
+  //console.log(clickedDiv.parentNode);
+  clickedDiv.parentNode.classList.toggle("side-panel-width");
+
+}
+
+</script>
+</body>
+</html>
