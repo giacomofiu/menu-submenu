@@ -1,2 +1,2 @@
 # menu-submenu
-menu template responsive with right to left slide in html, css, js
+responsive menu template with right to left slide in html, css, js
